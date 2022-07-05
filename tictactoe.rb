@@ -11,16 +11,50 @@ module TicTacToe
      "+-----------+\n"]
   end
 
+  def get_move(board, player, p, mode)
+    best = p == player ? -100 : 100
+    move = -1
+    0.upto(8) do |i|
+      if (board[i] == 0)
+        # simulate board where p makes a move in m
+        board[i] = p
+
+        # store the score based on a sequence of moves starting with m.
+        # The recursive call is made on the alternate perspective.
+        score = minimax(board, 0, player, p == 1 ? 2 : 1, mode)
+
+        # revert back to original board
+        board[i] = 0
+
+        if (p == player)
+          if (score >= best)
+            move = i
+            best = score
+          end
+        else
+          if (score <= best)
+            move = i
+            best = score
+          end
+        end
+      end
+    end
+
+    return move
+  end
+
   # X wins: 10,   O wins: -10,    tie: 0
+  # player = human, opp = AI
   # p: perspective
-  def minimax(board, depth, p)
+  def minimax(board, depth, player, p, mode)
+
     # check for available spots on the board
     spots = 0.upto(8).select { |i| board[i] == 0 }
 
     # check for wins
-    if (win?(board, p)) # player wins
+    if (win?(board, player)) # player wins
       return 10 - depth
-    elsif (win?(board, p == 1 ? 2 : 1)) # opponent wins
+    elsif (win?(board, player == 1 ? 2 : 1)) # opponent wins
       return depth - 10
     elsif (spots.empty?) # tie game
       return 0
@@ -28,27 +62,26 @@ module TicTacToe
 
     # if no winning or tie combination, continue to check for moves
 
-    # increment depth for every recursive call
-    depth += 1
+    # initialize array of scores
+    scores = []
 
-    # initialize hash of possible moves
-    moves = {}
+    if (mode != 2 || depth <= 1)
+      spots.each do |m|
+        # simulate board where p makes a move in m
+        board[m] = p
 
-    # find possible moves based on available spots
-    spots.each do |m|
-      # simulate board where p makes a move in m
-      board[m] = p
+        # Store the score based on a sequence of moves starting with m.
+        # The recursive call is made on the alternate perspective.
+        scores << minimax(board, depth + 1, player, p == 1 ? 2 : 1, mode)
 
-      # store the score based on move made by p. the recursive call is
-      # made on the perspective of the other player
-      moves[m] = minimax(board, depth, p == 1 ? 2 : 1)
-
-      # revert back to original board
-      board[m] = 0
+        # revert back to original board
+        board[m] = 0
+      end
     end
 
-    # find optimal move for player p
-    return p == 1 ? moves.max_by { |k, v| v }[0] : moves.min_by { |k, v| v }[0]
+    # find optimal move for player based on perspective
+    return 0 if scores.empty?
+    return p == player ? scores.max : scores.min
   end
 
   def win?(board, p)
