@@ -1,4 +1,5 @@
 require_relative "tictactoe.rb"
+require "colorize"
 
 include TicTacToe
 
@@ -6,32 +7,61 @@ QUIT = /q(uit)?/
 
 INTRO =
   ["=================================================================\n",
-   "|          OOXX      Welcome to TIC TAC TOE      OXOX           |\n",
+   "|          " + "OOXX".bold.blink +
+   "      " + "Welcome to TIC TAC TOE".light_red +
+   "      " + "OXOX".bold.blink + "           |\n",
    "=================================================================\n",
-   "|                    made by: Samuel Kosasih                    |\n",
+   "|                    " + "made by: Samuel Kosasih".light_yellow +
+   "                    |\n",
    "=================================================================\n",
    "| Choose a mode:                                                |\n",
-   "| <cas>  : play a casual game with the CPU                      |\n",
-   "| <pro>  : battle an expert CPU                                 |\n",
-   "| <GOD>  : CPU IS A GOD                                         |\n",
-   "| <pvp>  : beat your friends (and vice versa)                   |\n",
-   "| <quit> : quit the game (works anywhere in the game)           |\n",
+   "| <" + "cas".light_green +
+   ">  : play a " + "casual".light_green +
+   " game with the CPU                      |\n",
+   "| <" + "pro".light_yellow +
+   ">  : battle an " + "expert".light_yellow +
+   " CPU                                 |\n",
+   "| <" + "GOD".light_red +
+   ">  : " + "CPU IS A GOD".light_red +
+   "                                         |\n",
+   "| <" + "pvp".light_cyan +
+   ">  : beat your " + "friends".light_cyan +
+   " (and vice versa)                   |\n",
+   "| <" + "quit".light_magenta +
+   "> : " + "quit".light_magenta +
+   " the game (works anywhere in the game)           |\n",
    "=================================================================\n"]
 
 PLAY_INS =
   ["=================================================================\n",
    "|  +-----------+  | An example board is shown on the left.      |\n",
-   "|  | 1 | 2 | 3 |  |                                             |\n",
+   "|  | " +
+   "1".light_red + " | " +
+   "2".light_yellow + " | " +
+   "3".light_magenta +
+   " |  |                                             |\n",
    "|  +-----------+  | To play, simply enter the desired grid when |\n",
-   "|  | 4 | 5 | 6 |  | it is your turn. Choices are grids 1 - 9.   |\n",
+   "|  | " +
+   "4".light_cyan + " | " +
+   "5".light_blue + " | " +
+   "6".light_green +
+   " |  | it is your turn. Choices are grids " +
+   "1".light_red + " - " +
+   "9".light_yellow + ".   |\n",
    "|  +-----------+  |                                             |\n",
-   "|  | 7 | 8 | 9 |  | Enter <q> to quit anytime.                  |\n",
-   "|  +-----------+  | GOOD LUCK!                                  |\n",
+   "|  | " +
+   "7".light_green + " | " +
+   "8".light_cyan + " | " +
+   "9".light_yellow +
+   " |  | Enter <" + "q".light_magenta +
+   "> to quit anytime.                  |\n",
+   "|  +-----------+  | " + "GOOD LUCK!".light_green +
+   "                                  |\n",
    "=================================================================\n"]
 
 # ============================================================================
 
-# @!group Utility Methods
+# @!group Utility Functions
 
 # ----------------------------------------------------------------------------
 
@@ -99,16 +129,32 @@ end
 
 # ============================================================================
 
+# ============================================================================
+
+# @!group Play Functions
+
+# ----------------------------------------------------------------------------
+
 def playCPU(mode)
   board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  puts
-  f_print(["VS CPU (#{mode == EASY ? "CASUAL" :
-    mode == MED ? "PROFESSIONAL" : "GOD"})\n"], 0, false)
-  f_print(PLAY_INS, 0, true)
+  f_print(
+    ["                                                                 \n",
+     "#{mode == EASY ?
+      "                         VS CPU (" + "CASUAL".light_green + ")" :
+      mode == MED ?
+      "                      VS CPU (" + "PROFESSIONAL".light_yellow + ")" :
+      "                          VS CPU (" + "GOD".light_red + ")"}" + "\n"] +
+      PLAY_INS, 0, true
+  )
 
   # Choose Symbols
   while (true)
-    f_print(["Now, enter <1> to be X, or <2> to be O\n"], 0, false)
+    f_print(
+      ["                                                                 \n",
+       "            --- Enter <" + "1".light_magenta +
+       "> to be X, or <" + "2".light_cyan + "> to be O ---\n"],
+      0, true
+    )
     print "Choose Symbol => "
     inp = STDIN.gets.chomp.downcase
 
@@ -119,7 +165,9 @@ def playCPU(mode)
     elsif (inp =~ QUIT)
       return -1
     else
-      puts "Invalid Input. Please enter <1> to be X or <2> to be O ..."
+      puts "Invalid Input.".light_red +
+             " Please enter <" + "1".light_magenta +
+             "> to be X, or <" + "2".light_cyan + "> to be O ..."
       next
     end
   end
@@ -134,20 +182,37 @@ def playCPU(mode)
       !board.include?(0) ? 3 : nil
 
     if flag # end game
-      f_print(["\n", "--- YOU WIN ---\n"], 0, false) if flag == 1
-      f_print(["\n", "--- YOU LOSE ---\n"], 0, false) if flag == 2
-      f_print(["\n", "--- TIE ---\n"], 0, false) if flag == 3
+      f_print(
+        ["                                                                 \n",
+         "                         --- " + "YOU WIN".light_green +
+         " ---\n"], 0, true
+      ) if flag == 1
+      f_print(
+        ["                                                                 \n",
+         "                        --- " + "YOU LOSE!".light_red +
+         " ---\n"], 0, true
+      ) if flag == 2
+      f_print(
+        ["                                                                 \n",
+         "                           --- " + "TIE".light_yellow +
+         " ---\n"], 0, true
+      ) if flag == 3
       break
     end
 
     if (turn == player) # player turn
-      f_print(["\n", "--- YOUR TURN ---\n"], 0, false)
+      f_print(
+        ["                                                                 \n",
+         "                        --- " + "YOUR TURN".light_magenta +
+         " ---\n"], 0, true
+      )
       print "Choose a spot => "
       inp = STDIN.gets.chomp.downcase
 
       if (inp =~ /^[1-9]$/)
         if (board[inp.to_i - 1] != 0)
-          puts "This grid is taken. Choose an empty one.\n\n"
+          puts "This spot is " + "taken".light_red +
+                 ". Choose an empty one.\n\n"
           f_print(print_board(board), 0, false)
           next
         else
@@ -156,7 +221,8 @@ def playCPU(mode)
       elsif (inp =~ QUIT)
         return -1
       else
-        puts "Invalid Input. Enter a number between 1 - 9 ...\n\n"
+        puts "Invalid Input".light_red +
+               ". Enter a number between 1 - 9 ...\n\n"
         f_print(print_board(board), 0, false)
         next
       end
@@ -172,11 +238,15 @@ def playCPU(mode)
   end
 end
 
+# ----------------------------------------------------------------------------
+
 def playPVP
   board = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  puts
-  f_print(["PVP MODE\n"], 0, false)
-  f_print(PLAY_INS, 0, true)
+  f_print(
+    ["                                                                 \n",
+     "                            " + "PVP MODE".light_cyan + "\n"] +
+      PLAY_INS + ["\n"], 0, true
+  )
   delay(1)
 
   turn = 1
@@ -189,19 +259,40 @@ def playPVP
       !board.include?(0) ? 3 : nil
 
     if flag # end game
-      f_print(["\n", "--- PLAYER 1 (X) WINS ---\n"], 0, false) if flag == 1
-      f_print(["\n", "--- PLAYER 2 (O) WINS ---\n"], 0, false) if flag == 2
-      f_print(["\n", "--- TIE ---\n"], 0, false) if flag == 3
+      f_print(
+        ["                                                                 \n",
+         "                    --- " + "PLAYER 1 (X) WINS".light_magenta +
+         " ---\n"], 0, true
+      ) if flag == 1
+      f_print(
+        ["                                                                 \n",
+         "                    --- " + "PLAYER 2 (O) WINS".light_cyan +
+         " ---\n"], 0, true
+      ) if flag == 2
+      f_print(
+        ["                                                                 \n",
+         "                           --- " + "TIE".light_yellow +
+         " ---\n"], 0, true
+      ) if flag == 3
       break
     end
 
-    f_print(["\n", "--- PLAYER #{turn}'s (#{SYMS[turn]}) TURN ---\n"], 0, false)
+    f_print( # Prompt Player 1
+      ["                                                                 \n",
+       "                   --- " + "PLAYER 1's (X) TURN".light_magentan +
+       " ---\n"], 0, true
+    ) if turn == 1
+    f_print( # Prompt Player 2
+      ["                                                                 \n",
+       "                   --- " + "PLAYER 2's (O) TURN".light_cyan +
+       " ---\n"], 0, true
+    ) if turn == 2
     print "Choose a spot => "
     inp = STDIN.gets.chomp.downcase
 
     if (inp =~ /^[1-9]$/)
       if (board[inp.to_i - 1] != 0)
-        puts "This grid is taken. Choose an empty one.\n\n"
+        puts "This spot is " + "taken".light_red + ". Choose an empty one.\n\n"
         f_print(print_board(board), 0, false)
         next
       else
@@ -210,7 +301,7 @@ def playPVP
     elsif (inp =~ QUIT)
       return -1
     else
-      puts "Invalid Input. Enter a number between 1 - 9 ...\n\n"
+      puts "Invalid Input".light_red + ". Enter a number between 1 - 9 ...\n\n"
       f_print(print_board(board), 0, false)
       next
     end
@@ -221,20 +312,29 @@ def playPVP
   end
 end
 
+# ----------------------------------------------------------------------------
+
+# @!endgroup
+
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+
 def main
   while (true)
     puts
-    f_print(INTRO, 0, false)
+    f_print(INTRO, 0, true)
     puts
     print "Enter your command => "
     inp = STDIN.gets.chomp.downcase
 
-    if inp =~ /c(as)?|p(ro)?|g(od)?|pvp|/
+    if inp =~ /c(as)?|p(ro)?|g(od)?|pvp/
       if (inp =~ /pvp/)
         while (true)
           if (playPVP() != -1)
+            puts
             delay(1.5)
-            f_print(["Try Again?  Y/N => "], 0, false)
+            f_print([" Try Again?  Y/N => "], 0, false)
             inp = STDIN.gets.chomp.downcase
             if inp =~ /y(es)?/ then next else break end
           end
@@ -244,8 +344,9 @@ def main
         mode = inp =~ /c(as)?/ ? EASY : inp =~ /p(ro)?/ ? MED : HARD
         while (true)
           if (playCPU(mode) != -1)
+            puts
             delay(1.5)
-            f_print(["Try Again?  Y/N => "], 0, false)
+            f_print([" Try Again?  Y/N => "], 0, false)
             inp = STDIN.gets.chomp.downcase
             if inp =~ /y(es)?/ then next else break end
           end
@@ -253,11 +354,14 @@ def main
         end
       end
     elsif inp =~ QUIT
+        puts "see you soon!\n".light_green
       break
     else
-      puts "Invalid Input. Please try again ..."
+      puts "Invalid Input".light_red + ". Please try again ..."
     end
   end
 end
+
+# ----------------------------------------------------------------------------
 
 main()
