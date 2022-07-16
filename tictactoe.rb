@@ -28,7 +28,7 @@ module TicTacToe
   # @example Printing the board [1, 2, 1, 2, 2, 0, 0, 1, 0]
   #    X | O | X
   #    O | O |
-  #      | X | 
+  #      | X |
   #
   # @param board [Array<Integer>] the board to be displayed
   #
@@ -134,11 +134,11 @@ module TicTacToe
   #    score is computed based on the results of that specific simulation.
   #
   # Since the function makes a number of recursive calls, we maintain a +depth+
-  # counter to help the function determine how many turns until it wins or 
+  # counter to help the function determine how many turns until it wins or
   # loses. A tie game would always result in 0, regardless of perspective. But
   # it is important to know the proximity of a win/lose so it would have a bias
-  # of picking the one in closer proximity. In this algorithm, the maximum 
-  # possible score returned is +10+, in which +player+ would have won. The 
+  # of picking the one in closer proximity. In this algorithm, the maximum
+  # possible score returned is +10+, in which +player+ would have won. The
   # minimum score returned is +-10+, in which +player+ would have lost. These
   # are convenient values since in an empty board, the maximum depth is +9+, and
   # we will still be able to indicate a tie game.
@@ -152,23 +152,23 @@ module TicTacToe
   # represent distinct players, and 0 represents empty spots.
   #    X | O | X
   #    O | O |
-  #      | X | 
-  # If it was player 1's turn (X), here is how the algorithm would evaluate 
+  #      | X |
+  # If it was player 1's turn (X), here is how the algorithm would evaluate
   # scores for every spot. Note that available spots are +[5, 6, 8]+.
   # - If X took spot 5, then O will take either spots 6 or 8. Regardless, the
   #   game will end in a tie. So spot 5 evaluates to a score of +0+.
-  # - If X took spot 6, then O will take either spots 5 or 8. If O were to 
-  #   choose spot 5, then O would win the game, resulting in a score of +-8+. 
-  #   On the other hand, if O were to choose spot 8, then the game would result 
+  # - If X took spot 6, then O will take either spots 5 or 8. If O were to
+  #   choose spot 5, then O would win the game, resulting in a score of +-8+.
+  #   On the other hand, if O were to choose spot 8, then the game would result
   #   in a tie, resulting in a score of +0+. However, at this function call, the
   #   score returned will be the minimum because the current iteration takes the
-  #   perspective of O (the minimizer). 
+  #   perspective of O (the minimizer).
   #   Therefore, spot 5 evaluates to a score of +-8+.
   # - Similarly, if X took spot 8, the same case would happen if X were to take
   #   spot 6, where O has the possibility of winning by taking spot 5.
   #   Therefore spot 8 evaluates to a score of +-8+.
-  # If we present these results into a hash, then we'd have +{5 => 0, 6 => -8, 
-  # 8 => -8}+. The maximum score belongs to spot 5. Therefore, the function 
+  # If we present these results into a hash, then we'd have +{5 => 0, 6 => -8,
+  # 8 => -8}+. The maximum score belongs to spot 5. Therefore, the function
   # will return the score 0.
   #
   # @example The function call for the evaluation above
@@ -178,11 +178,11 @@ module TicTacToe
   #    the Tic Tac Toe board to be evaluated
   # @param depth [Integer] a placeholder value to keep track of recursion depth
   # @param player [Integer] the symbol to represent the player
-  # @param pers [Integer] the symbol to represent the perspective of the 
+  # @param pers [Integer] the symbol to represent the perspective of the
   #        simulated board
   # @param mode [Integer] an integer value to denote the mode
   #
-  # @return [Integer] an +Integer+ value representing the best score from all 
+  # @return [Integer] an +Integer+ value representing the best score from all
   #          the spots on the board
   def minimax(board, depth, player, pers, mode)
 
