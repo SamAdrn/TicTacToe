@@ -61,7 +61,7 @@ gem install yard
 
 Then, run this command to document all files (including `private` methods) into a web document:
 ```
-yardoc --private maze.rb runner.rb
+yardoc --private tictactoe.rb runner.rb
 ```
 
 You can then open the web document using the following command:
