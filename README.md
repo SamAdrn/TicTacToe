@@ -38,6 +38,10 @@ ruby runner.rb
 
 ## Playing the Game
 
+## Welcome to TicTacToe
+
+<img src="screenshots/gameplay.png" alt="gameplay screenshot" width="800">
+
 As you start the game, you are given four different game modes to choose from.
 
 The first three modes involve playing against the CPU, in three different levels of difficulty.
@@ -47,6 +51,10 @@ attempt to block forks made by the player to its best ability.
 * God `GOD` : An **impossible** game with the CPU. It simulates a perfect player, creating forks (while blocking yours), not allowing you to win the game. Ties are possible, but because the CPU looks ahead for every possibility, winning is impossible.
 
 The PVP `pvp` mode is also available for players who want to go against other players locally.
+
+<img src="screenshots/menu.png" alt="menu screenshot" width="800">
+
+Good luck trying to beat the God CPU.
 
 <br>
 
