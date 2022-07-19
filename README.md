@@ -40,7 +40,7 @@ ruby runner.rb
 
 ## Welcome to TicTacToe
 
-<img src="screenshots/gameplay.png" alt="gameplay screenshot" width="800">
+<img src="screenshots/menu.png" alt="menu screenshot" width="800">
 
 As you start the game, you are given four different game modes to choose from.
 
@@ -52,7 +52,7 @@ attempt to block forks made by the player to its best ability.
 
 The PVP `pvp` mode is also available for players who want to go against other players locally.
 
-<img src="screenshots/menu.png" alt="menu screenshot" width="800">
+<img src="screenshots/gameplay.png" alt="gameplay screenshot" width="800">
 
 Good luck trying to beat the God CPU.
 
