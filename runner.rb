@@ -324,7 +324,7 @@ def playPVP
 
     f_print( # Prompt Player 1
       ["                                                                 \n",
-       "                   --- " + "PLAYER 1's (X) TURN".light_magentan +
+       "                   --- " + "PLAYER 1's (X) TURN".light_magenta +
        " ---\n"], 0, true
     ) if turn == 1
 
